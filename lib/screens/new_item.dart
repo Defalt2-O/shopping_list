@@ -73,7 +73,20 @@ class _NewItemScreenState extends State<NewItemScreen> {
                     ),
                   ),
                 ],
-              )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('Reset'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Submit'),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
