@@ -20,9 +20,14 @@ class _NewItemScreenState extends State<NewItemScreen> {
     final _formKey = GlobalKey<
         FormState>(); //Used mainly for a form, to get access to it through its key value.
     //generic data helps with tools such as autocomplete suggestions.
+    var _enteredName = '';
+    var _enteredQuantity = 1;
+    var _selectedCategory = categories[Categories.vegetables]!;
 
     void _saveItem() {
-      _formKey.currentState!.validate();
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+      }
     }
 
     return Scaffold(
@@ -38,6 +43,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
             children: [
               TextFormField(
                 maxLength: 50,
+                initialValue: _enteredName,
                 decoration: const InputDecoration(
                   label: Text('Name'),
                 ),
@@ -50,6 +56,9 @@ class _NewItemScreenState extends State<NewItemScreen> {
                   }
                   return null;
                 },
+                onSaved: (value) {
+                  _enteredName = value!;
+                },
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -57,7 +66,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                   Expanded(
                     child: TextFormField(
                       keyboardType: TextInputType.number,
-                      initialValue: '1',
+                      initialValue: _enteredQuantity.toString(),
                       decoration: const InputDecoration(
                         label: Text('Quantity'),
                       ),
@@ -70,6 +79,9 @@ class _NewItemScreenState extends State<NewItemScreen> {
                         }
                         return null;
                       },
+                      onSaved: (value) {
+                        _enteredQuantity = int.parse(value!);
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -77,6 +89,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                   ),
                   Expanded(
                     child: DropdownButtonFormField(
+                      value: _selectedCategory,
                       items: [
                         for (final category in categories.entries)
                           DropdownMenuItem(
@@ -97,7 +110,9 @@ class _NewItemScreenState extends State<NewItemScreen> {
                             ),
                           ),
                       ],
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        _selectedCategory = value!;
+                      },
                     ),
                   ),
                 ],
