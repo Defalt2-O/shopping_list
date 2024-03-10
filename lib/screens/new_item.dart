@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -15,6 +17,14 @@ class NewItemScreen extends StatefulWidget {
 class _NewItemScreenState extends State<NewItemScreen> {
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<
+        FormState>(); //Used mainly for a form, to get access to it through its key value.
+    //generic data helps with tools such as autocomplete suggestions.
+
+    void _saveItem() {
+      _formKey.currentState!.validate();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add a New Item'),
@@ -22,6 +32,8 @@ class _NewItemScreenState extends State<NewItemScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
+          key:
+              _formKey, //this key is used so that this form it is connected tp, can be easily accessed from outside.
           child: Column(
             children: [
               TextFormField(
@@ -44,6 +56,7 @@ class _NewItemScreenState extends State<NewItemScreen> {
                 children: [
                   Expanded(
                     child: TextFormField(
+                      keyboardType: TextInputType.number,
                       initialValue: '1',
                       decoration: const InputDecoration(
                         label: Text('Quantity'),
@@ -93,11 +106,13 @@ class _NewItemScreenState extends State<NewItemScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _formKey.currentState!.reset();
+                    },
                     child: const Text('Reset'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: _saveItem,
                     child: const Text('Submit'),
                   ),
                 ],
