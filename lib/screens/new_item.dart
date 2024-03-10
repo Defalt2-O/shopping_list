@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:shopping_list/data/categories.dart';
 
 class NewItemScreen extends StatefulWidget {
   const NewItemScreen({super.key});
@@ -30,6 +33,47 @@ class _NewItemScreenState extends State<NewItemScreen> {
                   return 'Demo...';
                 },
               ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      initialValue: '1',
+                      decoration: const InputDecoration(
+                        label: Text('Quantity'),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(
+                    child: DropdownButtonFormField(
+                      items: [
+                        for (final category in categories.entries)
+                          DropdownMenuItem(
+                            value: category.value,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.square,
+                                  color: category.value.color,
+                                ),
+                                const SizedBox(
+                                  width: 6,
+                                ),
+                                Text(
+                                  category.value.title,
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
+                      onChanged: (value) {},
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
