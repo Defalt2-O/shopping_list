@@ -30,7 +30,13 @@ class _NewItemScreenState extends State<NewItemScreen> {
                   label: Text('Name'),
                 ),
                 validator: (value) {
-                  return 'Demo...';
+                  if (value == null ||
+                      value.isEmpty ||
+                      value.length <= 1 ||
+                      value.length > 50) {
+                    return 'Please enter a title between 1 and 50 characters.';
+                  }
+                  return null;
                 },
               ),
               Row(
@@ -42,6 +48,15 @@ class _NewItemScreenState extends State<NewItemScreen> {
                       decoration: const InputDecoration(
                         label: Text('Quantity'),
                       ),
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            int.tryParse(value)! <= 0 ||
+                            int.tryParse(value) == null) {
+                          return 'Please enter a positive integer.';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   const SizedBox(
