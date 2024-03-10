@@ -1,9 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shopping_list/data/categories.dart';
+import 'package:shopping_list/models/grocery_item.dart';
 
 class NewItemScreen extends StatefulWidget {
   const NewItemScreen({super.key});
@@ -27,6 +26,14 @@ class _NewItemScreenState extends State<NewItemScreen> {
     void _saveItem() {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
+        Navigator.of(context).pop(
+          GroceryItem(
+            id: DateTime.now().toString(),
+            name: _enteredName,
+            quantity: _enteredQuantity,
+            category: _selectedCategory,
+          ),
+        );
       }
     }
 
